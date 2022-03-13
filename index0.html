@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<head>
+    <title>Bigorrila's timer</title>
+</head>
+<body>
+    <div id = "timer">
+        10:00
+    </div>
+    
+    
+    <script>
+        function styleMinutes(){
+            if(parseInt(minutes) < 10){
+                minutes = "0" + minutes
+            }
+        }
+        function styleSeconds(){
+            if(parseInt(seconds) < 10){
+                seconds = "0" + minutes
+            }
+        }
+        function process(){
+            const timerElement = document.getElementByid("timer")
+            const currentTime = timerElement.innerHTML
+
+            let minutes = currentTime.split(":")[0]//这里使用数组是因为split结果在htmlconsle里面返回的结果就是一个array
+            let seconds = currentTime.split(":")[1]
+            //定义成let是因为后需要进行相关修改
+            //定义成const是一个常量操作
+            
+            if(parseInt(seconds) === 0 && parseInt(minutes) === 0){
+                clearInterval(interval)
+                clearInterval(intervalminutes)
+                clearInterval(intervalseconds)
+            }
+            else if(parseInt(seconds) === 0){
+                seconds = 59
+                minutes = minutes - 1
+            }
+            intervalminutes = setInterval(styleMinutes,60)//60秒这里数值可能有问题
+            intervalseconds = setInterval(styleSeconds,10)//60秒这里数值可能有问题
+
+            timerElement.innerHTML = minutes + ":" + seconds
+        }
+        interval = setInterval(process, 1000)//这里对时间进行修改可以节省调试时间
+    </script>
+</body>
+</html>

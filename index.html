@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<head>
+  <title>Coding TV Epeisode 1 - Timer</title>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      height: 100%;
+      text-align: center;
+      padding-top: 30vh;
+      background-color: hsl(120, 70%, 60%);
+      color: #FFFFFF;
+      font-size: 58px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    #timer {
+      margin-top: 30px;
+      font-family: monospace;
+    }
+    #tiger {
+      cursor: pointer;/*将鼠标转换为指针手*/
+      margin-top: 40px;
+    }
+    #fox {
+      cursor: pointer;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body id="body">
+  <div id="title">
+    Coding TV - Timer
+  </div>
+  <div id="timer">
+    20:00
+  </div>
+  <div id="tiger">
+    🐯 - ⏯ <!---emoji应该是用的是什么插件啥的-->
+  </div>
+  <div id="fox">
+    🦊 - 🔄
+  </div>
+  <script>
+    let interval
+    let isRunning = false
+
+    function process () {
+      const timerElement = document.getElementById("timer")
+      const currentTime = timerElement.innerHTML
+
+      let minutes = parseInt(currentTime.split(":")[0])
+      let seconds = parseInt(currentTime.split(":")[1])
+
+      if (seconds === 0 && minutes === 0) {
+        clearInterval(interval)
+        isRunning = false
+      } else if (seconds === 0) {
+        seconds = 59
+        minutes = minutes - 1
+      } else {
+        seconds = seconds - 1
+      }
+
+      const totalSeconds = 20 * 60
+      const totalSecondsLeft = minutes * 60 + seconds
+      const h = parseInt((totalSecondsLeft / totalSeconds) * 120)//不理解这里是什么 
+
+      if (minutes < 10) {
+        minutes = "0" + minutes
+      }
+
+      if (seconds < 10) {
+        seconds = "0" + seconds
+      }
+
+      timerElement.innerHTML = minutes + ":" + seconds
+      document.getElementById("body").style.backgroundColor = `hsl(${h}, 70%, 60%)`//不理解这里是什么
+    }
+
+    document.getElementById("tiger").onclick = function () {
+      if (isRunning === true) {
+        clearInterval(interval)
+        isRunning = false
+      } else {
+        interval = setInterval(process, 10)
+        isRunning = true
+      }    
+    }
+
+    document.getElementById("fox").onclick = function () {
+      if (isRunning === true) {
+        clearInterval(interval)
+        isRunning = false
+      }
+      document.getElementById("timer").innerHTML = "20:00"
+    }
+  </script>
+</body>
